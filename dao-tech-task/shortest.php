@@ -1,14 +1,14 @@
+
 <?php 
  include 'helpers.php';
 
 $start_point = $_POST['start_point'] ?? '';	
 $end_point   = $_POST['end_point'] ?? '';
 
-$graph = jsonToArray("graph.json");
-$graph = array_map(function($val) {
-      eval('$ret = '.rtrim($val,',').';');
-      return($ret);
-   }, $graph);
+// $graph = jsonToArray("graph.json");
+// Parse graph.json file
+$graph = parseJson();
+
 
 function Dijkstra(array $graph, string $source, string $target)
 {
@@ -19,7 +19,7 @@ function Dijkstra(array $graph, string $source, string $target)
 	foreach ($graph as $v => $adj) {
 		$dist[$v] = PHP_INT_MAX;
 		$pred[$v] = null;
-		$Queue->insert($v, min(explode(",",$adj)));// get the node and its value -> A-3, B-3, C-2..
+		$Queue->insert($v, min($adj));// get the node and its value -> A-3, B-3, C-2..
 	}
 	// dd($Queue);
 	$dist[$source]  = 0; // set the source node distance as 0
@@ -47,22 +47,29 @@ function Dijkstra(array $graph, string $source, string $target)
 	}
 
 	if ($S->isEmpty()) {
-		return ["distance" => 0, "$path" => $S];
+		return ["distance" => 0, "path" => $S];
 	} else {
 		$S->push($source);
 		return ["distance" => $distance, "path" => $S];
 	}
 }
 
-// $source = $start_point;
-// $target = $end_point;
-// $result = Dijkstra($graph, $source, $target);
-// extract($result);
-// echo "Distance from $source to $target is $distance \n";
-// echo "Path to follow : ";
-// while (!$path->isEmpty()) {
-// echo $path->pop() . "\t";
-// }
+echo $back = <<< _EOT
+<button style="background-color:orange;">
+<a href="index.php">Back</a>
+</button>
+ <br><br>
+_EOT;
 
+$source = $start_point;
+$target = $end_point;
+$result = Dijkstra($graph, $source, $target);
+extract($result);
+echo "Distance(Общий вес) from $source to $target is $distance \n";
+echo "<br>";
+echo "Path to follow : ";
+while (!$path->isEmpty()) {
+echo "<li>" . $path->pop() . "</li>"  . "\t" ;
+}
 
 ?>
