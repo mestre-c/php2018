@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Single Solution {% endblock %}
+
+{% block body %}
+   <h1>{{ solution.subject }}</h1>
+    <p>{{ solution.content }}</p>
+    <hr>
+    <a href="/">Go Back</a>
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Crud in Symfony 4 {% endblock %}
+
+{% block body %}
+    <h1>Stories</h1>
+        {% if stories %}
+                <table id="story-table" class="table table-striped" style="border: 1px solid black">
+                    <thead>
+                        <tr>
+                            <th>Stories</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for story in stories %}
+                        <tr>
+                            <td>{{ story.title }}</td>
+                            <td>
+                                <a href="/story/{{ story.id }}"
+                                   class="btn btn-dark">Show</a>
+                            </td>
+                            <td>
+                                <a href="/story/edit/{{ story.id }}"
+                                   class="btn btn-primary">Edit</a>
+                            </td>
+                            <td>
+                                <a href="#"
+                                   class="btn btn-danger delete-story"
+                                   data-id="{{ story.id }}">Delete</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+        {% else %}
+            <p>No Stories found!</p>
+        {% endif %}
+    <hr>
+    {#<h2>Solutions</h2>#}
+    {#{% if solutions %}#}
+    {#<table id="solution-table" class="table table-striped" style="border: 1px solid black;">#}
+        {#<thead>#}
+            {#<tr>#}
+                {#<th>Solutions</th>#}
+                {#<th>Actions</th>#}
+            {#</tr>#}
+        {#</thead>#}
+        {#<tbody>#}
+            {#{% for solution in solutions %}#}
+            {#<tr>#}
+                {#<td>{{ solution.subject }}</td>#}
+                {#<td>#}
+                    {#<a href="/solution/{{ solution.id }}" class="btn btn-dark">Show</a>#}
+                {#</td>#}
+                {#<td>#}
+                    {#<a href="#"#}
+                       {#class="btn btn-danger delete-solution"#}
+                       {#data-id="{{ solution.id }}">Delete</a>#}
+                {#</td>#}
+            {#</tr>#}
+            {#{% endfor %}#}
+        {#</tbody>#}
+    {#</table>#}
+    {#{% else %}#}
+    {#<p>No Solutions found</p>#}
+    {#{% endif %}#}
+{% endblock %}
+
+{% block javascripts %}
+    <script src="/js/main.js"></script>
+{% endblock %}
